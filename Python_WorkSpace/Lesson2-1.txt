@@ -6,6 +6,10 @@ while True:
   coin = int(input('동전을 넣으세요.'))
   drink = int(input('음료를 고르세요.\n'))
 
+  if coin <= 0 or drink <= 0:
+     print('음료 번호와 동전을 확인 하시오')
+     continue
+
   if drink == 1:
     #Orange Juice 100won
     if coin >= 100:
