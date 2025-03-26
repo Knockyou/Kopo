@@ -1,6 +1,6 @@
 n = int(input())
 if n <= 0:
-   print('음수값은 사용 불가 합니다')
+   print('0 보다 큰값을 입력해주세요')
 else:
   str = ''
   for i in range(1, n + 1, 1):
