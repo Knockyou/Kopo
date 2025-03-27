@@ -1,0 +1,49 @@
+# 자판기를 리스트가 아니라 모두 튜플로 바꿀것
+# 고정되어 있는 것 모두
+
+# Vending machine HomeWork
+tuple_menu_info  = (1, '오렌지주스', 100), (2, '커피', 200), (3, '콜라', 300)
+drink_chk = False # Drink Menu Number Valid Check
+while True:
+  try:
+
+    print('음료 목록 -> ')
+    for i in range(len(tuple_menu_info)):
+      print(f"{tuple_menu_info[i][0]}.{tuple_menu_info[i][1]}({tuple_menu_info[i][2]})")
+    print()
+
+    coin = int(input('동전을 넣으세요.'))
+    if coin <= 0:
+      print('경고!! 동전을 다시 넣어 주세요')
+      continue
+
+    # Drink Menu Valid Check
+    drink_chk = True
+    drink = int(input('음료를 고르세요.\n'))
+    for i in range(len(tuple_menu_info)):
+      if drink != tuple_menu_info[i][0]:
+        drink_chk = False
+      else:
+        drink_chk = True
+        break
+
+    # False continue
+    if drink_chk == False:
+      print('없는 메뉴입니다. 다시 입력해 주세요.')
+      continue
+
+    cost = tuple_menu_info[drink - 1][2]
+    if coin >= cost:
+      remain = coin - cost
+      print(f"{tuple_menu_info[drink - 1][1]}가 곧 제공됩니다")
+      print('거스름돈은 {}원입니다.'.format(remain))
+    else:
+      print('잔액이 부족합니다.')
+
+    coin = 0
+    if coin == 0:
+      break
+
+  except:
+    print('경고!! 잘못된 입력 값 입니다')
+    continue
