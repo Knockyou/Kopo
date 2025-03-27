@@ -1,0 +1,16 @@
+try:
+  row = int(input('행을 입력하세요 : '))
+  col = int(input('열을 입력하세요 : '))
+
+  if row * col <= 0:
+    print('양수의 값을 입려하셔야 합니다')
+  else:
+    pass
+    for i in range(0, row):
+      for j in range(0, col):
+        print((j + i) + 1, end = '')
+      print()
+
+except Exception as e:
+  print(e)
+  print('입력값 오류 입니다')
