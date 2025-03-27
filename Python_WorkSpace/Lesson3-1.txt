@@ -7,12 +7,12 @@ try:
   # Loop Count
   col_cnt = 1
   # ' ' Count  -> root
-  blank_cnt = int(n**(1 / 2))
+  blank_cnt = int(n ** (1 / 2))
   # print Number
   num = 1
   count = 0
   while True:
-    print(' ' * blank_cnt, end='')
+    print(' ' * blank_cnt, end = '')
 
     while True:
       if count < col_cnt:
@@ -23,7 +23,7 @@ try:
         num += 1
       elif num >= n: # cnt and count eqaul case!
         print()
-        print(num, end='')
+        print(num, end = '')
         break;
       else:
         print()
