@@ -3,38 +3,38 @@ try:
   n = int(input('숫자를 입력하시오 : '))
   if n <= 0:
     print('0보다 큰수여야 합니다')
-
-  # Loop Count
-  col_cnt = 1
-  # ' ' Count  -> root
-  blank_cnt = int(n ** (1 / 2))
-  # print Number
-  num = 1
-  count = 0
-  while True:
-    print(' ' * blank_cnt, end = '')
-
-    while True:
-      if count < col_cnt:
-        print(num, end='')
-        count += 1
-        if num >= n:
-          break;
-        num += 1
-      elif num >= n: # cnt and count eqaul case!
-        print()
-        print(num, end = '')
-        break;
-      else:
-        print()
-        break;
-
-    blank_cnt -= 1
+  else:
+    # Loop Count
+    col_cnt = 1
+    # ' ' Count  -> root
+    blank_cnt = int(n ** (1 / 2))
+    # print Number
+    num = 1
     count = 0
-    col_cnt += 2
+    while True:
+      print(' ' * blank_cnt, end = '')
 
-    if num >= n:
-      break
+      while True:
+        if count < col_cnt:
+          print(num, end='')
+          count += 1
+          if num >= n:
+            break;
+          num += 1
+        elif num >= n: # cnt and count eqaul case!
+          print()
+          print(num, end = '')
+          break;
+        else:
+          print()
+          break;
+
+      blank_cnt -= 1
+      count = 0
+      col_cnt += 2
+
+      if num >= n:
+        break
 
 except Exception as e:
   print(e)
