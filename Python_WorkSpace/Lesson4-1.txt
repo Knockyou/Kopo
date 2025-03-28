@@ -2,13 +2,13 @@ try:
   row = int(input('행을 입력하세요 : '))
   col = int(input('열을 입력하세요 : '))
 
-  if row * col <= 0 or (row * col) * -1 <= 1:
-    print('양수의 값을 입력하셔야 합니다')
-  else:
+  if row > 0 and col > 0:
     for i in range(0, row):
       for j in range(0, col):
         print((j + i) + 1, end = '')
       print()
+  else:
+    print('두수 모두 양수의 값을 입력하셔야 합니다')
 
 except Exception as e:
   print(e)
