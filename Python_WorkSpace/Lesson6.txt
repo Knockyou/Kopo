@@ -18,8 +18,8 @@ print(high_id)
 high_kakao = high_level[:, 2]
 unique_values, value_counts = np.unique(high_kakao, return_counts=True)
 print('카카오 함유량', unique_values)
-print('함유량별 빈도수',value_counts)
+print('함유량별 빈도수', value_counts)
 
 max_index = np.argmax(value_counts)
 print(unique_values[max_index])
-print('우수 초콜릿', high_id.size, '가지 중', value_counts[max_index],'가지의 카카오 함유량이', unique_values[max_index]*100, '%입니다')
+print('우수 초콜릿', high_id.size, '가지 중', value_counts[max_index], '가지의 카카오 함유량이', unique_values[max_index]*100, '%입니다')
