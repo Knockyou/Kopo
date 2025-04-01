@@ -1,0 +1,150 @@
+import pandas as pd
+import numpy as np
+import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_excel('region_pop.xlsx', sheet_name =['2022', '2023', '2024', '2025','pop_predict'])
+year = ['2022', '2023', '2024', '2025']
+
+#지역별 연도별
+region_year=[[],[],[],[]]
+region = []
+for i in range (0, len(df[year[0]])):
+    region.append(df[year[0]].loc[i][3])
+region = list(set(region))
+region.sort()
+
+# 연도별 서울시 총인구
+total_sum =[[],[],[],[]]
+for i in range(0,4):
+    for j in range (0, len(df[year[i]])):
+        total_sum[i].append(df[year[i]].loc[j][5])
+    total_sum[i] = np.sum(total_sum[i])
+
+# 연도별 서울시 근로인구 및 비율
+total_work =[[],[],[],[]]
+total_work_per =[[],[],[],[]]
+
+# 연도별 서울시 노인인구 및 비율
+total_old =[[],[],[],[]]
+total_old_per =[[],[],[],[]]
+
+#연도별 평균나이
+total_age_avg =[]
+
+for i in range(0,4):
+    age = 0
+    for j in range (0, len(df[year[i]])):
+        for k in range(6,117):
+            age += (df[year[i]].loc[j][k])*(k-6)
+        for l in range (21,67):
+            total_work[i].append(df[year[i]].loc[j][l])
+        for m in range (71,117):
+            total_old[i].append(df[year[i]].loc[j][m])
+    total_age_avg.append(age/total_sum[i])
+    total_work[i] = np.sum(total_work[i])
+    total_work_per[i] = (total_work[i] / total_sum[i])*100
+    total_old[i] = np.sum(total_old[i])
+    total_old_per[i] = (total_old[i] / total_sum[i])*100
+    for j in region:
+        region_pop = 0
+        for n in range(0,len(df[year[i]])):
+            if df[year[i]].loc[n][3] == j:
+                region_pop += df[year[i]].loc[n][5]
+        region_year[i].append(region_pop)
+
+
+# 22년-25년 증감률
+region_area = {'종로구': '도심권', '중구': '도심권', '용산구': '도심권',
+    '성동구': '동북권', '광진구': '동북권', '동대문구': '동북권', 
+    '중랑구': '동북권', '성북구': '동북권', '도봉구': '동북권',
+    '강북구': '동북권', '노원구': '동북권', '은평구': '서북권',
+    '서대문구': '서북권', '마포구': '서북권', '양천구': '서남권',
+    '강서구': '서남권', '구로구': '서남권', '금천구': '서남권',
+    '영등포구': '서남권', '동작구': '서남권', '관악구': '서남권',
+    '서초구': '동남권', '강남구': '동남권', '송파구': '동남권', '강동구': '동남권'}
+rate = []
+for i in range(len(region)):
+    rate.append(((region_year[3][i] - region_year[0][i])/region_year[0][i])*100)
+
+max_index = np.argmax(rate)
+min_index = np.argmin(rate)
+print(f'증감률이 가장 높은 구는 {region[max_index]}, 증감률은 {rate[max_index] : .2f}%,증감률이 가장 낮은 구는 {region[min_index]}, 증감률은 {rate[min_index] : .2f}%')
+
+df1 = pd.DataFrame({'지역' : region, '증감률' : rate})
+df1['권역'] = df1['지역'].map(region_area)
+
+# 권역별 평균 증감률 계산
+area_rate = df1.groupby('권역')['증감률'].mean().reset_index()
+area_rate['순위'] = area_rate['증감률'].rank(method = 'first',ascending = False)
+area_rate = area_rate.sort_values(by=['순위'])
+# 출력 및 저장
+print(area_rate)
+area_rate.to_csv('area_rate.csv', index=False)
+
+#### 그래프 그리기 시작####
+# 퍼센트 pivot 처리
+for i in range(0, len(total_work_per)):
+  total_work_per[i] *= 100000
+  total_old_per[i] *= 100000
+
+fig, ax1 = plt.subplots(nrows = 2, figsize=(10, 12)) # 캔버스 생성
+
+bar_width = 0.15 # 그래프바 굵기
+
+df = pd.DataFrame({'total_people_cnt': total_sum,
+                   'total_people_work_cnt': total_work,
+                   'total_people_old_cnt': total_old,
+                   'total_people_work_per': total_work_per,
+                   'total_people_old_per': total_old_per,
+                   'total_age_avg': total_age_avg
+                   }, index = year)
+
+#df1 = pd.DataFrame({'total_age_avg': total_age_avg }, index = year)
+
+x = np.arange(len(year))
+plt.xticks(np.arange(bar_width, 4 + bar_width, 1), year)
+
+ax1[0].bar(x, df['total_people_cnt'], bar_width, alpha = 0.4, color='skyblue', label='Total population')
+ax1[0].bar(x + bar_width, df['total_people_work_cnt'], bar_width, alpha = 0.4, color='gray', label='Working population')
+ax1[0].bar(x + 2 * bar_width, df['total_people_old_cnt'], bar_width, alpha = 0.4, color='blue', label='Elderly population')
+
+ax1[0].plot(year, df['total_people_work_per'], color='red', linestyle='-',marker='o')
+ax1[0].plot(year, df['total_people_old_per'], color='green',linestyle='-',marker='o')
+
+ax1[0].set_ylabel('Population Count')
+ax1[0].set_ylim(1000000, 10000000) #y축 범위
+
+
+for i, txt in enumerate(total_work_per):
+  ax1[0].text(year[i], total_work_per[i] + 10000, f'{txt / 100000:.2f}%', ha='center', va='top')
+for i, txt in enumerate(total_sum):
+  ax1[0].text(year[i], total_sum[i] + 50, f'{txt:,}', ha='center', va='top')
+for i, txt in enumerate(total_old_per):
+  ax1[0].text(year[i], total_old_per[i] + 10000, f'{txt / 100000:.2f}%', ha='center', va='top')
+for i, txt in enumerate(total_work):
+  ax1[0].text(year[i], total_work[i] + 50, f'{txt:,}', ha='left', va='top')
+for i, txt in enumerate(total_old):
+  ax1[0].text(year[i], total_old[i] + 50, f'{txt:,}', ha='left', va='top')
+
+plt.xlabel('Total population   Working population   Elderly population   Working population ratio   Elderly population ratio', size = 6)
+plt.title('Seoul City population growth and age group', size=10)
+
+
+
+ax1[1].bar(x, df['total_age_avg'], bar_width * 3, alpha = 0.4, color='skyblue', label='Total Age Avg population')
+
+#for i, txt in enumerate(total_age_avg):
+ # ax1[1].text(year[i], total_age_avg[i], f'{txt:.2f}', ha='center', va='top')
+
+plt.xlabel('Total Age avg population', size = 6)
+plt.title('Seoul City population age Avrage', size=10)
+
+plt.legend()
+plt.grid()
+plt.show()
+
+
+
+
