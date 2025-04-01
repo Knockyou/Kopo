@@ -103,6 +103,8 @@ df = pd.DataFrame({'total_people_cnt': total_sum,
                    'total_age_avg': total_age_avg
                    }, index = year)
 
+#df1 = pd.DataFrame({'area_rate': area_rate }, index = regin)
+
 x = np.arange(len(year))
 plt.xticks(np.arange(bar_width, 4 + bar_width, 1), year)
 
@@ -145,6 +147,10 @@ plt.grid()
 plt.subplots_adjust(hspace = 0.2) # 간격 설정
 plt.show()
 
+
+# 권역 인원
+plt.bar(area_rate['권역'], area_rate['증감률'])
+plt.show()
 
 
 
