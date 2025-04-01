@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 df = pd.read_excel('region_pop.xlsx', sheet_name =['2022', '2023', '2024', '2025','pop_predict'])
 year = ['2022', '2023', '2024', '2025']
+regin = ['Southeastern', 'Northwestern', 'Southwestern', 'Northeastern', 'Central']
 
 #지역별 연도별
 region_year=[[],[],[],[]]
@@ -56,14 +56,14 @@ for i in range(0,4):
 
 
 # 22년-25년 증감률
-region_area = {'종로구': '도심권', '중구': '도심권', '용산구': '도심권',
-    '성동구': '동북권', '광진구': '동북권', '동대문구': '동북권', 
-    '중랑구': '동북권', '성북구': '동북권', '도봉구': '동북권',
-    '강북구': '동북권', '노원구': '동북권', '은평구': '서북권',
-    '서대문구': '서북권', '마포구': '서북권', '양천구': '서남권',
-    '강서구': '서남권', '구로구': '서남권', '금천구': '서남권',
-    '영등포구': '서남권', '동작구': '서남권', '관악구': '서남권',
-    '서초구': '동남권', '강남구': '동남권', '송파구': '동남권', '강동구': '동남권'}
+region_area = {'종로구': 'Central', '중구': 'Central', '용산구': 'Central',
+    '성동구': 'Northeastern', '광진구': 'Northeastern', '동대문구': 'Northeastern', 
+    '중랑구': 'Northeastern', '성북구': 'Northeastern', '도봉구': 'Northeastern',
+    '강북구': 'Northeastern', '노원구': 'Northeastern', '은평구': 'Northwestern',
+    '서대문구': 'Northwestern', '마포구': 'Northwestern', '양천구': 'Southwestern',
+    '강서구': 'Southwestern', '구로구': 'Southwestern', '금천구': 'Southwestern',
+    '영등포구': 'Southwestern', '동작구': 'Southwestern', '관악구': 'Southwestern',           
+    '서초구': 'Southeastern', '강남구': 'Southeastern', '송파구': 'Southeastern', '강동구': 'Southeastern'}
 rate = []
 for i in range(len(region)):
     rate.append(((region_year[3][i] - region_year[0][i])/region_year[0][i])*100)
@@ -80,16 +80,18 @@ area_rate = df1.groupby('권역')['증감률'].mean().reset_index()
 area_rate['순위'] = area_rate['증감률'].rank(method = 'first',ascending = False)
 area_rate = area_rate.sort_values(by=['순위'])
 # 출력 및 저장
-print(area_rate)
+#print(area_rate)
 area_rate.to_csv('area_rate.csv', index=False)
 
-#### 그래프 그리기 시작####
+####그래프 그리기 시작####
+
+# 퍼센트 pivot 처리
 # 퍼센트 pivot 처리
 for i in range(0, len(total_work_per)):
   total_work_per[i] *= 100000
   total_old_per[i] *= 100000
 
-fig, ax1 = plt.subplots(nrows = 2, figsize=(10, 12)) # 캔버스 생성
+fig, ax1 = plt.subplots(nrows = 2, figsize=(11, 12)) # 캔버스 생성
 
 bar_width = 0.15 # 그래프바 굵기
 
@@ -100,8 +102,6 @@ df = pd.DataFrame({'total_people_cnt': total_sum,
                    'total_people_old_per': total_old_per,
                    'total_age_avg': total_age_avg
                    }, index = year)
-
-#df1 = pd.DataFrame({'total_age_avg': total_age_avg }, index = year)
 
 x = np.arange(len(year))
 plt.xticks(np.arange(bar_width, 4 + bar_width, 1), year)
@@ -128,21 +128,21 @@ for i, txt in enumerate(total_work):
 for i, txt in enumerate(total_old):
   ax1[0].text(year[i], total_old[i] + 50, f'{txt:,}', ha='left', va='top')
 
-plt.xlabel('Total population   Working population   Elderly population   Working population ratio   Elderly population ratio', size = 6)
-plt.title('Seoul City population growth and age group', size=10)
-
+ax1[0].set_xlabel('Total population   Working population   Elderly population   Working population ratio   Elderly population ratio', size = 6)
+ax1[0].set_title('Seoul City population growth and age group', size=10)
 
 
 ax1[1].bar(x, df['total_age_avg'], bar_width * 3, alpha = 0.4, color='skyblue', label='Total Age Avg population')
 
-#for i, txt in enumerate(total_age_avg):
- # ax1[1].text(year[i], total_age_avg[i], f'{txt:.2f}', ha='center', va='top')
+for i, txt in enumerate(total_age_avg):
+  ax1[1].text(i, total_age_avg[i], f'{txt:.2f}', ha='center', va='top')
 
-plt.xlabel('Total Age avg population', size = 6)
-plt.title('Seoul City population age Avrage', size=10)
+ax1[1].set_xlabel('Total Age avg population', size = 6)
+ax1[1].set_title('Seoul City population age Avrage', size=10)
 
 plt.legend()
 plt.grid()
+plt.subplots_adjust(hspace = 0.2) # 간격 설정
 plt.show()
 
 
