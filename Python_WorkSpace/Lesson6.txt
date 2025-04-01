@@ -1,6 +1,8 @@
-# 식재료 관리 프로그램
+# 실수 판별 함수
 def check_prime_num(x):
-  if x <= 0: return False # 음수 예외처리
+  if x <= 0: 
+    print('양수의 값을 넣어 주시기 바랍니다')
+    return False # 음수 예외처리
   for i in range(2, x):
     if x % i == 0:
       #x가 i로 나누어 떨어지aus 실행하기
