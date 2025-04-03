@@ -9,34 +9,18 @@ Write your code in this editor and press "Run" button to compile and execute it.
                     
 int main()
 {
-    // 1°úÁ¦
+    // 1ê³¼ì œ
     int a, b, c;
     
     scanf("%d %d %d", &a, &b, &c);
     if(a < 0 || b < 0 || c < 0)
     {
-        printf("¾ç¼öÀÇ °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä"); 
+        printf("ì–‘ìˆ˜ì˜ ê°’ì„ ìž…ë ¥í•˜ì„¸ìš”"); 
         return 0;
     }
     
-    printf("¿¬»ê °á°ú : (%d + %d) x %d - (%d - %d) / %d = %d\n", 
+    printf("ì—°ì‚° ê²°ê³¼ : (%d + %d) x %d - (%d - %d) / %d = %d\n", 
         a, b, c, a, b, c, (a + b) * c - (a - b) / c);
                 
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
