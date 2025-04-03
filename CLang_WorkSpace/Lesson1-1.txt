@@ -11,18 +11,18 @@ Write your code in this editor and press "Run" button to compile and execute it.
                     
 int main()
 {   
-    // 2°úÁ¦
+    // 2ê³¼ì œ
     int temp;
     scanf("%d", &temp);
     
     if(temp < 0)
     {
-        printf("¾ç¼öÀÇ °ªÀ» ÀÔ·ÂÇÏ¼¼¿ä¿ä"); 
+        printf("ì–‘ìˆ˜ì˜ ê°’ì„ ì…ë ¥í•˜ì„¸ìš”ìš”"); 
         return 0;
     }
     else if(temp / 1000 >= 10)
     {
-        printf("3 ÀÚ¸®ÀÇ Á¤¼ö¸¸ ÀÔ·Â °¡´É ÇÕ´Ï´Ù"); 
+        printf("3 ìë¦¬ì˜ ì •ìˆ˜ë§Œ ì…ë ¥ ê°€ëŠ¥ í•©ë‹ˆë‹¤"); 
         return 0;
     }
     
@@ -30,23 +30,7 @@ int main()
     int tFix = (temp - (hFix * 100)) / 10;
     int sFix = temp - ((hFix * 100) + (tFix * 10));
     
-    printf("ÀÚ¸® ¼öÀÇ ÇÕ : %d\n", hFix +  tFix + sFix);
+    printf("ìë¦¬ ìˆ˜ì˜ í•© : %d\n", hFix +  tFix + sFix);
                    
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
