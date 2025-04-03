@@ -1,0 +1,42 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+#include <stdio.h>
+                    
+int main()
+{
+    // 1과제
+    int a, b, c;
+    
+    scanf("%d %d %d", &a, &b, &c);
+    if(a < 0 || b < 0 || c < 0)
+    {
+        printf("양수의 값을 입력하세요"); 
+        return 0;
+    }
+    
+    printf("연산 결과 : (%d + %d) x %d - (%d - %d) / %d = %d\n", 
+        a, b, c, a, b, c, (a + b) * c - (a - b) / c);
+                
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
