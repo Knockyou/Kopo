@@ -19,7 +19,7 @@ int main()
         return 0;
     }
     
-    printf("확인용 : %d\n", num);
+    //printf("확인용 : %d\n", num);
     
     if(num < 0)
     {
