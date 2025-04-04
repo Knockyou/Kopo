@@ -38,6 +38,8 @@ int main()
         printf("모든 자리수의 합이 7의 배수");
         return 1;
     }
+    
+    printf("특별하지 않은 평수 입니다");
 
     return 0;
 }
