@@ -26,7 +26,7 @@ int main()
         printf("양수의 값을 입력하세요"); 
         return 0;
     }
-    else if(num / 1000 >= 10 || sizeof(num) != sizeof(int))
+    else if(num / 1000 >= 1 || sizeof(num) != sizeof(int))
     {
         printf("3 자리의 정수만 입력 가능 합니다"); 
         return 0;
