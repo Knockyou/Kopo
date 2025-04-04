@@ -1,0 +1,25 @@
+#include <stdio.h>
+int main()
+{
+    int a = 0;
+    printf("정수를 입력해 주세요 : ");
+    if (!scanf("%d", &a))
+    {
+        printf("올바른 값을 입력해주세요.");
+        return 0;
+    }
+
+    if (a / 10 > 0)
+    {
+        printf("0 ~ 9수를 입력하세요");
+        return 1;
+    }
+    const int startNum = 97;
+    // A => 97, J => 106
+    printf("%c 입니다", char(startNum + a));
+
+    printf("프로그램 종료");
+
+    return 0;
+}
+

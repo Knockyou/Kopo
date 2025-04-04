@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main()
+{
+    int a = 0;
+
+    if (!scanf_s("%d", &a))
+    {
+        printf("올바른 값을 입력해주세요.");
+        return 0;
+    }
+
+    switch (a / 10)
+    {
+    case 3:
+        printf("너무 더워요! 반팔과 반바지를 입으세요.");
+        break;
+    case 2:
+        if(a >= 25)
+            printf("따뜻한 날씨입니다! 가벼운 옷을 입으세요");
+        else
+            printf("선선한 날씨입니다! 가벼운 겉옷을 챙기세요");
+        break;
+    case 1:
+        if (a >= 15)
+            printf("선선한 날씨입니다! 가벼운 겉옷을 챙기세요");
+        else
+            printf("조금 쌀쌀합니다! 따뜻한 옷을 입으세요.");
+        break;
+    case 0:
+        if (a >= 5)
+            printf("조금 쌀쌀합니다! 따뜻한 옷을 입으세요.");
+        else
+            printf("매우 춥습니다! 두꺼운 외투를 꼭입으세요.");
+        break;
+    default :
+        if(a <= 0)
+   	    printf("한파 경고! 패딩과 장갑, 모자를 착용하세요.");
+	else
+	    printf("너무 더워요! 반팔과 반바지를 입으세요.");
+	break;
+
+    }
+
+    return 0;
+}

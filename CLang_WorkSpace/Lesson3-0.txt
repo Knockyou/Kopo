@@ -1,0 +1,44 @@
+#include <stdio.h>
+
+int main()
+{
+    int a = 0;
+    printf("정수를 입력해 주세요 : ");
+    if (!scanf("%d", &a))
+    {
+        printf("올바른 값을 입력해주세요.");
+        return 0;
+    }
+
+    if (a % 3 == 0)
+    {
+        printf("3의 배수 특별한 수 입니다");
+        return 1;
+    }
+
+    // 자리수 체크
+    int hnum = 0, tnum = 0, snum = 0;
+    
+    hnum = a / 100;
+    a %= 100;
+    tnum = a / 10;
+    a %= 10;
+    snum = a;
+
+    // 숫자의 첫번째 자리 수와 마지막 자리수 체크
+    if (a >= 10 && (hnum > snum) || (tnum > snum))
+    {
+        printf("첫번째 자리 숫자가 마지막 자리 숫자보다 큰 특별수 입니다");
+        return 1;
+    }
+
+    // 숫자의 각 자리 숫자의 합
+    if ((snum + tnum + hnum) % 7 == 0)
+    {
+        printf("모든 자리수의 합이 7의 배수");
+        return 1;
+    }
+
+    return 0;
+}
+

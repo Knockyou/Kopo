@@ -1,0 +1,67 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main()
+{
+    // 3과제 복권 추첨 과제
+
+    // 중복제거, 오름 차순
+    int num[] = { 0, 0, 0, 0, 0, 0, 0 };
+    int numLength = sizeof(num) / sizeof(int);
+    srand(time(NULL));
+
+    // 랜덤수 저장
+    num[0] = (int)(rand() % 45) + 1;
+    num[1] = (int)(rand() % 45) + 1;
+    num[2] = (int)(rand() % 45) + 1;
+    num[3] = (int)(rand() % 45) + 1;
+    num[4] = (int)(rand() % 45) + 1;
+    num[5] = (int)(rand() % 45) + 1;
+    num[6] = (int)(rand() % 45) + 1;
+
+    // 중복 없이 난수 생성
+    for (int i = 0; i < numLength; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (num[i] == num[j])
+            {
+                num[i] = (int)(rand() % 45) + 1;
+                i--;
+            }
+        }
+    }
+
+    // 삽입 정렬
+    int tempIdx;
+    int tempVal;
+
+    for (int i = 1; i < numLength; i++)
+    {
+        tempIdx = num[i];
+        int j = i - 1;
+        while (j >= 0 && num[j] > tempIdx)
+        {
+            num[j + 1] = num[j];
+            j--;
+        }
+        num[j + 1] = tempIdx;
+    }
+
+    printf("---------------------\n");
+
+    for (int i = 0; i < numLength; i++)
+    {
+        printf("%02d ", num[i]);
+    }
+
+    return 0;
+}

@@ -1,0 +1,47 @@
+#include <stdio.h>
+int main()
+{
+    int a = 0;
+    printf("정수를 입력해 주세요 : ");
+    if (!scanf("%d", &a))
+    {
+        printf("올바른 값을 입력해주세요.");
+        return 0;
+    }
+
+    if (a > 100)
+    {
+        printf("0 ~ 100수를 입력하세요");
+        return 1;
+    }
+    
+    switch (a / 10)
+    {
+    case 10:
+    case 9:
+        printf("A 등급\n");
+        printf("추가 보너스 10%\n");
+        printf("%.2lf 점", a * 1.1);
+        break;
+    case 8:
+        printf("B 등급");
+        printf("추가 보너스 5%\n");
+        printf("%.2lf 점", a * 1.05);
+        break;
+    case 7:
+        printf("C 등급");
+        break;
+    case 6:
+        printf("D 등급");
+        break;
+    default:
+        printf("F 등급");
+        break;
+    }
+
+
+    printf("\n프로그램 종료");
+
+    return 0;
+}
+
