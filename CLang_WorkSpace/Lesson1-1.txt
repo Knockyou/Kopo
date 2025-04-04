@@ -12,23 +12,27 @@ Write your code in this editor and press "Run" button to compile and execute it.
 int main()
 {   
     // 2과제
-    int temp;
-    scanf("%d", &temp);
-    
-    if(temp < 0)
+    int num;
+    if(!scanf("%d", &num))
     {
-        printf("양수의 값을 입력하세요요"); 
+        printf("정수의 값을 입력하세요"); 
         return 0;
     }
-    else if(temp / 1000 >= 10)
+    
+    if(num < 0)
+    {
+        printf("양수의 값을 입력하세요"); 
+        return 0;
+    }
+    else if(num / 1000 >= 10)
     {
         printf("3 자리의 정수만 입력 가능 합니다"); 
         return 0;
     }
     
-    int hFix = temp / 100;
-    int tFix = (temp - (hFix * 100)) / 10;
-    int sFix = temp - ((hFix * 100) + (tFix * 10));
+    int hFix = num / 100;
+    int tFix = (num - (hFix * 100)) / 10;
+    int sFix = num - ((hFix * 100) + (tFix * 10));
     
     printf("자리 수의 합 : %d\n", hFix +  tFix + sFix);
                    
