@@ -34,19 +34,18 @@ int main()
     }
 
     // 삽입 정렬
-    int tempIdx;
     int tempVal;
 
     for (int i = 1; i < numLength; i++)
     {
-        tempIdx = num[i];
+        tempVal = num[i];
         int j = i - 1;
-        while (j >= 0 && num[j] > tempIdx)
+        while (j >= 0 && num[j] > tempVal)
         {
             num[j + 1] = num[j];
             j--;
         }
-        num[j + 1] = tempIdx;
+        num[j + 1] = tempVal;
     }
 
     printf("---------------------\n");
