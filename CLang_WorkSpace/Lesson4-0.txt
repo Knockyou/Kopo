@@ -16,6 +16,12 @@ int main()
         return 0;
     }
 
+    if (n < m)
+    {
+        printf("두번째 정수는 첫번째 정수보다 큰수이어야 합니다");
+        return 0;
+    }
+
     for (int i = m; i <= n; i++)
     {
         if (i % 7 == 0)
@@ -27,7 +33,7 @@ int main()
         }
         printf("%d ", i);
     }
-        
+
     printf("\n");
     return 0;
 }
