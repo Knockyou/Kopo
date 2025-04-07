@@ -10,6 +10,12 @@ int main()
         return 0;
     }
 
+    if(a < 0)
+    {
+   	printf("한파 경고! 패딩과 장갑, 모자를 착용하세요.");
+   	return 0;
+    }
+
     switch (a / 10)
     {
     case 3:
