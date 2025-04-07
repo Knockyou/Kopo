@@ -5,17 +5,17 @@ int main()
   // 1과제
   int a = 0, b = 0, c = 0;
 
-  if(!scanf("%d\n", &a))
+  if(!scanf("%d", &a))
   {
     printf("정수의 값을 입력하세요");
     return 0;
   }
-  if(!scanf("%d\n", &b))
+  if(!scanf("%d", &b))
   {
     printf("정수의 값을 입력하세요");
     return 0;
   }
-  if(!scanf("%d\n", &c))
+  if(!scanf("%d", &c))
   {
     printf("정수의 값을 입력하세요");
     return 0;
