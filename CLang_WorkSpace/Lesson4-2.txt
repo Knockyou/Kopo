@@ -10,6 +10,12 @@ int main()
         return 0;
     }
 
+    if (row <= 0)
+    {
+        printf("1 이상의 정수를 입력 하셔야 출력 됩니다");
+        return 0;
+    }
+
     for (int i = row; i > 0; i--)
     {
         for (int j = 0; j < i; j++)
