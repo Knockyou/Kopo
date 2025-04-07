@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main()
+{        
+    int m = 0, n = 0;
+
+    if (!scanf("%d", &m))
+    {
+        printf("정수의 값을 입력 해주세요");
+        return 0;
+    }
+
+    if (!scanf("%d", &n))
+    {
+        printf("정수의 값을 입력 해주세요");
+        return 0;
+    }
+
+    for (int i = m; i <= n; i++)
+    {
+        if (i % 7 == 0)
+            continue;
+        if (i % 5 == 0)
+        {
+            printf("%d ", i);
+            break;
+        }
+        printf("%d ", i);
+    }
+        
+    printf("\n");
+    return 0;
+}

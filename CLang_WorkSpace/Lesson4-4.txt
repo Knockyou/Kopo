@@ -1,0 +1,23 @@
+#include <stdio.h>
+
+int main()
+{        
+    int row = 0;
+
+    if (!scanf("%d", &row))
+    {
+        printf("정수의 값을 입력 해주세요");
+        return 0;
+    }
+
+    int i = 1;
+    while(row-- >= 1)
+    {
+        if(i % 2 == 0)
+            printf("%d %c", i, ' ');
+        i++;
+    }
+        
+    printf("\n");
+    return 0;
+}

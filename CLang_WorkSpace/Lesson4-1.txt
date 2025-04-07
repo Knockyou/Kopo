@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+int main()
+{        
+    int row = 0;
+
+    if (!scanf("%d", &row))
+    {
+        printf("정수의 값을 입력 해주세요");
+        return 0;
+    }
+
+    for (int i = 1; i <= row; i++)
+    {
+        for(int t = 1; t <= row - i; t++)
+            printf("%c", ' ');
+
+        for (int j = 1; j <= i; j++)
+        {
+            printf("%d ", j);
+        }
+        printf("\n");
+    }
+        
+    printf("\n");
+    return 0;
+}
