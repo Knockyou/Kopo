@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 int main()
-{        
+{
     int m = 0, n = 0;
 
     if (!scanf("%d", &m))
@@ -22,15 +24,21 @@ int main()
         return 0;
     }
 
+    char temp[500] = { 0, };
+
     for (int i = m; i <= n; i++)
     {
-        if (i % 7 == 0)
+        sprintf(temp, "%d", i);
+
+        if (i % 7 == 0 || strchr(temp, '7') != NULL)
             continue;
+
         if (i % 5 == 0)
         {
             printf("%d ", i);
             break;
         }
+
         printf("%d ", i);
     }
 
