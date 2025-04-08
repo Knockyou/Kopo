@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{   
+    int yearNmonth = 0;
+    for (int i = 202001; i < 202504; i += 100)
+    {
+        for (int j = 0; j < 12; j++)
+        {
+            yearNmonth = i + j;
+            if (yearNmonth >= 202303 && yearNmonth <= 202305)
+                continue;
+
+            printf("%d\n", yearNmonth);
+        }
+        printf("\n");
+    }
+    
+    printf("\n");
+    return 0;
+}
