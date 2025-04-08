@@ -11,7 +11,7 @@ int main()
             if (yearNmonth >= 202303 && yearNmonth <= 202305)
                 continue;
 
-            if(yearNmonth >= 202504)
+            if(yearNmonth >= 202505)
                 break;
 
             printf("%d\n", yearNmonth);
