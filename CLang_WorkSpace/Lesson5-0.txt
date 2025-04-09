@@ -29,14 +29,22 @@ void QuickSort(int *targetArr, int startIdx, int endIdx)
     while (i <= j) // 엇갈릴 때까지
     {
         while (i <= endIdx && targetArr[i] <= targetArr[pivot]) // 피벗보다 클때까지 반복
+        {
             i++;
+        }
         while (j > startIdx && targetArr[j] >= targetArr[pivot])// 피벗보다 작을 때까지
+        {
             j--;
+        }
 
         if (i > j) // 엇갈리면 피번 교체
+        {
             Swap(&targetArr[j], &targetArr[pivot]); // 배열 안에 개별 주소를 넘겨 주어야함
+        }
         else // 엇갈리지 않으면
+        {
             Swap(&targetArr[i], &targetArr[j]);
+        }
     }
     QuickSort(targetArr, startIdx, j - 1);
     QuickSort(targetArr, j + 1, endIdx);
@@ -49,14 +57,18 @@ int main()
 
     printf("[Before]");
     for (int i = 0; i < arrLen; i++)
+    {
         printf("%d ", arrNum[i]);
+    }
 
     // 배열자체가 포인터이므로 인자로 넘겨줌
     QuickSort(arrNum, 0, arrLen - 1);
 
     printf("\n[After]");
     for (int i = 0; i < arrLen; i++)
+    {
         printf("%d ", arrNum[i]);
+    }
 
     printf("\n\n");
     return 0;
