@@ -11,9 +11,9 @@ int main()
     }
 
     int i = 1;
-    while(row-- >= 1)
+    while (row-- >= 1)
     {
-        if(i % 2 == 0)
+        if (i % 2 == 0)
             printf("%d %c", i, ' ');
         i++;
     }
