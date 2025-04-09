@@ -31,8 +31,9 @@ int main()
         sprintf(temp, "%d", i);
 
         if (i % 7 == 0 || strchr(temp, '7') != NULL)
+        {
             continue;
-
+        }
         if (i % 5 == 0)
         {
             printf("%d ", i);
