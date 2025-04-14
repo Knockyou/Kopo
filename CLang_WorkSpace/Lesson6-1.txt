@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define INSERT_AGAIN 'Y'
+#define INSERT_AGAIN1 'y'
+#define INSERT_DONE 'N'
+#define INSERT_DONE1 'n'
+
+#define MALE 'M'
+#define MALE1 'm'
+#define FEMALE 'F'
+#define FEMALE1 'f'
+
+#define STUDENT_MAX_CNT 1000
+
+struct Student
+{
+	char* name[100];
+	int  age;
+	char gender;
+	char* hobbie[1000];
+
+	int IsInitChk;
+};
+
+struct Student* studentsPtr[STUDENT_MAX_CNT] = {
+	    { (char*)"Hong", 30, 'M', (char*)"soccer", 1 },
+	    { (char*)"Kim",  25, 'F', (char*)"muisic", 1 },
+	    { (char*)"Park", 20, 'M', (char*)"Reading a book", 1 }
+	};
+
+struct Student* SearchEmptyPtr()
+{
+	struct Student* resultPtr = studentsPtr;
+	int i = 0;
+	while (1)
+	{
+		resultPtr = studentsPtr + i;
+		if (resultPtr->age <= 0)
+		{
+			break;
+		}
+		++i;
+	}
+	return resultPtr;
+}
+
+void PrintStudentInfo()
+{
+    printf("11111못됨\n");
+	for (int i = 0; i < STUDENT_MAX_CNT; i++)
+	{
+	    printf("22222됨\n");
+		if (studentsPtr[i]->IsInitChk == 0)
+			break;
+        printf("33333됨\n");
+		printf("%s/%d/%c/%s\n", studentsPtr[i]->name, studentsPtr[i]->age, studentsPtr[i]->gender, studentsPtr[i]->hobbie);
+	}
+}
+
+// 문자열 관련
+int InvalidInputStrCheck(struct Student* studentsTemp, int isName)
+{
+	while (1)
+	{
+		if (isName)
+		{
+			printf("학생 이름 ： ");			
+			if (!scanf("%99s", studentsTemp->name, 100))
+			{
+				printf("입력값 잘못됨\n");
+				while (getchar() != '\n');
+				continue;
+			}
+			while (getchar() != '\n');
+			break;
+		}
+		else
+		{
+			printf("학생 취미 ： ");
+			if (!scanf("%99s", studentsTemp->hobbie, 100))
+			{
+				printf("입력값 잘못됨\n");
+				while (getchar() != '\n');
+				continue;
+			}
+			while (getchar() != '\n');
+			break;
+		}		
+	}
+	return 1;
+}
+
+// 정수형 관련
+int InvalidInputIntCheck(struct Student* studentsTemp)
+{
+	while (1)
+	{
+		printf("학생 나이 ： ");
+		if (!scanf("%d", &studentsTemp->age, sizeof(int)))
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+
+		if (studentsTemp->age <= 0)
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+		while (getchar() != '\n');
+		break;
+	}
+	return 1;
+}
+
+//	문자형 관련
+int InvalidInputCharCheck(struct Student* studentsTemp)
+{
+	while (1)
+	{
+		printf("학생 성별 ： ");
+		if (!scanf("%c", &studentsTemp->gender, sizeof(char)))
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+
+		if (sizeof(studentsTemp->gender) / sizeof(char) != 1)
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+		
+		if ((studentsTemp->gender == MALE || studentsTemp->gender == MALE1) ||
+			(studentsTemp->gender == FEMALE1 || studentsTemp->gender == FEMALE))
+		{
+			break;
+		}
+		else
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+
+		while (getchar() != '\n');
+		break;
+	}
+	return 1;
+}
+
+int InvalidInputCharCheck1(char* targetVal)
+{
+	while (1)
+	{
+		printf("\n계속 추가(%c/%c) ： ", INSERT_AGAIN, INSERT_DONE);
+		if (!scanf("%c", targetVal, sizeof(char)))
+		{
+			printf("입력값 잘못됨\n");
+			while (getchar() != '\n');
+			continue;
+		}
+
+		if ((*targetVal == INSERT_AGAIN || *targetVal == INSERT_AGAIN1) ||
+			(*targetVal == INSERT_DONE || *targetVal == INSERT_DONE1))
+		{
+			break;
+		}
+		else
+		{
+			printf("Y/N 입력받아야함\n");
+			while (getchar() != '\n');
+			continue;
+		}
+
+		while (getchar() != '\n');
+		break;
+	}
+	return 1;
+}
+
+void InsertStudentInfo()
+{
+	char flag = INSERT_DONE;
+	while (1)
+	{
+	 
+		struct Student *studentsTemp = SearchEmptyPtr();
+		InvalidInputStrCheck(studentsTemp, 1);
+		InvalidInputIntCheck(studentsTemp);
+		InvalidInputCharCheck(studentsTemp);
+		InvalidInputStrCheck(studentsTemp, 0);
+
+		studentsTemp->IsInitChk = 1;
+		PrintStudentInfo();
+		InvalidInputCharCheck1(&flag);
+		if (flag == INSERT_DONE || flag == INSERT_DONE1)
+			break;
+	}
+}
+
+int main()
+{
+	InsertStudentInfo();
+
+	printf("\n\n");
+	return 0;
+}
