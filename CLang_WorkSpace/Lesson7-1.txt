@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+int main() {
+    enum eVeihcle {NONE = -1, SEDAN = 1, SUV, TRUCK, VAN};
+    int num = NONE;
+    
+    printf("차량 종류 번호를 입력하세요 : ");
+    if(!scanf("%d", &num))
+    {
+        printf("정수형 값을 입력하세요");
+        return 0;
+    }
+    
+    switch(num)
+    {
+        case SEDAN:
+            printf("%s", "SEDAN");
+            break;
+        case SUV:
+            printf("%s", "SUV");
+            break;
+        case TRUCK:
+            printf("%s", "TRUCK");
+            break;
+        case VAN:
+        printf("%s", "VAN");
+            break;
+        default:
+        printf("%s", "없는 차량 정보");
+        break;
+    }
+    printf(" 입니다\n");
+    
+    return 0;
+}
