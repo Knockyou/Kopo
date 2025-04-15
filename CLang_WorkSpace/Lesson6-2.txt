@@ -1,0 +1,249 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define INSERT_AGAIN 'Y'
+#define INSERT_AGAIN1 'y'
+#define INSERT_DONE 'N'
+#define INSERT_DONE1 'n'
+
+#define MALE 'M'
+#define MALE1 'm'
+#define FEMALE 'F'
+#define FEMALE1 'f'
+
+#define STUDENT_MAX_CNT 1000
+
+typedef union StudentEtc {
+  char* hobby;
+  char* etc;
+} StudentEtc;
+
+struct Student {
+    char* name;
+    int age;
+    char gender;
+    int IsInitChk;
+    StudentEtc studentEtcPtr;
+};
+
+struct Student studentsPtr[STUDENT_MAX_CNT];
+
+struct Student* SearchEmptyPtr() {
+    int i = 0;
+    while (i < STUDENT_MAX_CNT) 
+    {
+        if (studentsPtr[i].IsInitChk == 0) 
+        {
+            return &studentsPtr[i];
+        }
+        i++;
+    }
+    return NULL;
+}
+
+void PrintStudentInfo() {
+    for (int i = 0; i < STUDENT_MAX_CNT; i++) 
+    {
+        if (studentsPtr[i].IsInitChk == 0)
+        {
+            break;
+        }
+        printf("%s / %d / %c / %s / %s\n", studentsPtr[i].name, studentsPtr[i].age, studentsPtr[i].gender, 
+        studentsPtr[i].studentEtcPtr.hobby, studentsPtr[i].studentEtcPtr.etc);
+    }
+}
+
+void InvalidInputStrCheck(struct Student* studentsTemp) {
+    char temp[100];
+    while (1) 
+    {
+        
+        printf("학생 이름 ： ");
+        if (!scanf("%99s", temp)) 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+            continue;
+        }
+        while (getchar() != '\n');
+
+        studentsTemp->name = (char*)malloc(strlen(temp) + 1);
+        strcpy(studentsTemp->name, temp);
+        
+        break;
+    }
+}
+
+void InvalidInputStrCheck1(struct Student* studentsTemp, int isHobby) {
+    char temp[100];
+    while (1) 
+    {
+        if (isHobby) 
+        {
+            printf("학생 취미 ： ");
+        } 
+        else 
+        {
+            printf("학생 기타 ： ");
+        }
+
+        if (!scanf("%99s", temp)) 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+            continue;
+        }
+        while (getchar() != '\n');
+
+        if (isHobby) 
+        {
+            studentsTemp->studentEtcPtr.hobby = (char*)malloc(strlen(temp) + 1);
+            strcpy(studentsTemp->studentEtcPtr.hobby, temp);
+        } 
+        else 
+        {
+            studentsTemp->studentEtcPtr.etc = (char*)malloc(strlen(temp) + 1);
+            strcpy(studentsTemp->studentEtcPtr.etc, temp);
+        }
+        break;
+    }
+}
+
+void InvalidInputIntCheck(struct Student* studentsTemp) {
+    while (1) 
+    {
+        printf("학생 나이 ： ");
+        if (!scanf("%d", &studentsTemp->age)) 
+        {
+            printf("입력값 잘못됨\n"); 
+            while (getchar() != '\n');
+            continue;
+        }
+
+        if (studentsTemp->age <= 0) 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        while (getchar() != '\n');
+        break;
+    }
+}
+
+void InvalidInputCharCheck(struct Student* studentsTemp) {
+    while (1) 
+    {
+        printf("학생 성별 ： ");
+        if (!scanf(" %c", &studentsTemp->gender)) 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        if ((studentsTemp->gender == MALE || studentsTemp->gender == MALE1) ||
+            (studentsTemp->gender == FEMALE || studentsTemp->gender == FEMALE1)) 
+        {
+            break;
+        } 
+        else 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+        }
+    }
+}
+
+void InvalidInputCharCheck_YesNo(char* targetVal) {
+    while (1) 
+    {
+        printf("\n계속 추가(%c/%c) ： ", INSERT_AGAIN, INSERT_DONE);
+        if (!scanf(" %c", targetVal)) 
+        {
+            printf("입력값 잘못됨\n");
+            while (getchar() != '\n');
+            continue;
+        }
+
+        if ((*targetVal == INSERT_AGAIN || *targetVal == INSERT_AGAIN1) ||
+            (*targetVal == INSERT_DONE || *targetVal == INSERT_DONE1)) 
+        {
+            break;
+        } 
+        else 
+        {
+            printf("Y/N 입력받아야함\n");
+            while (getchar() != '\n');
+        }
+    }
+}
+
+void InsertStudentInfo() {
+    char flag = INSERT_DONE;
+    while (1) 
+    {
+        struct Student* studentsTemp = SearchEmptyPtr();
+        
+        InvalidInputStrCheck(studentsTemp);    
+        InvalidInputIntCheck(studentsTemp);       
+        InvalidInputCharCheck(studentsTemp);      
+        InvalidInputStrCheck1(studentsTemp, 1);   
+        InvalidInputStrCheck1(studentsTemp, 0);
+
+        studentsTemp->IsInitChk = 1;
+
+        PrintStudentInfo();
+
+        InvalidInputCharCheck_YesNo(&flag);
+        if (flag == INSERT_DONE || flag == INSERT_DONE1)
+        {
+            break;
+        }
+    }
+}
+
+void InitStudentInfo() {
+    studentsPtr[0].name = "Hong";
+    studentsPtr[0].age = 30;
+    studentsPtr[0].gender = 'M';
+    studentsPtr[0].studentEtcPtr.hobby = "soccer";
+    studentsPtr[0].studentEtcPtr.etc = "tear Drop";
+    studentsPtr[0].IsInitChk = 1;
+
+    studentsPtr[1].name = "Kim";
+    studentsPtr[1].age = 25;
+    studentsPtr[1].gender = 'F';
+    studentsPtr[1].studentEtcPtr.hobby = "music";
+    studentsPtr[1].studentEtcPtr.etc = "L2TP";
+    studentsPtr[1].IsInitChk = 1;
+
+    studentsPtr[2].name = "Park";
+    studentsPtr[2].age = 20;
+    studentsPtr[2].gender = 'M';
+    studentsPtr[2].studentEtcPtr.hobby = "Lego";
+    studentsPtr[2].studentEtcPtr.etc = "OAuth";
+    studentsPtr[2].IsInitChk = 1;
+}
+
+void Cleaning(){
+    for (int i = 0; i < STUDENT_MAX_CNT; i++) 
+    {
+        if (studentsPtr[i].IsInitChk) 
+        {
+            free(studentsPtr[i].name);
+            free(studentsPtr[i].studentEtcPtr.hobby);
+            free(studentsPtr[i].studentEtcPtr.etc);
+        }
+    }
+}
+
+int main() {
+    InitStudentInfo();
+    InsertStudentInfo();
+    
+    Cleaning();
+    return 0;
+}
