@@ -130,6 +130,7 @@ void InvalidInputCharCheck_YesNo(char* targetVal) {
 
 void InsertStudentInfo() {
     char flag = INSERT_DONE;
+    PrintStudentInfo();
     while (1) {
         struct Student* studentsTemp = SearchEmptyPtr();
         
