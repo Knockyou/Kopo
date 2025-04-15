@@ -34,8 +34,8 @@ typedef enum eDay
     Sat
 } DAY;
 
-const int OrdinaryYearDay[Dec] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 평년
-const int     LeapYearDay[Dec] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 윤년
+const int OrdinaryYearDay[Dec + 1] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 평년
+const int     LeapYearDay[Dec + 1] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 윤년
 
 void PrintMonth(int* monthPtr)
 {
@@ -81,7 +81,8 @@ void PrintMonth(int* monthPtr)
     }
 }
 
-int isLeapYear(int* yearPtr) {return (((*yearPtr % 4 == 0) && (*yearPtr % 100 != 0)) || (*yearPtr % 400 == 0));}
+// Leap Year is 1 return
+int isLeapYear(int year) {return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));}
 
 
 int StartDay(int* yearPtr, int* monthPtr)
@@ -90,7 +91,7 @@ int StartDay(int* yearPtr, int* monthPtr)
     
     for(int i = START_YEAR; i < *yearPtr; i++)
     {
-        if(isLeapYear(yearPtr))
+        if(isLeapYear(i))
         {
             total += 366;
         }
@@ -100,9 +101,9 @@ int StartDay(int* yearPtr, int* monthPtr)
         }
     }
     
-    for(int i = 0; i < *monthPtr; i++)
+    for(int i = 1; i < *monthPtr; i++)
     {
-        if(isLeapYear(yearPtr))
+        if(isLeapYear(i))
         {
             total += LeapYearDay[i];
         }
@@ -160,13 +161,13 @@ void PrintCalendar(int* yearPtr, int* monthPtr)
     printf(" Sun Mon Tue Wed Thu Fri Sat\n");
     
     int startDay = StartDay(yearPtr, monthPtr);
-    int lastDay = isLeapYear(yearPtr) > 1 ? LeapYearDay[*monthPtr + 1] : OrdinaryYearDay[*monthPtr + 1];
+    int lastDay = isLeapYear(*yearPtr) ? LeapYearDay[*monthPtr] : OrdinaryYearDay[*monthPtr];
     for(int i = 0; i < startDay; i++)
     {
         printf("    ");
     }
     
-    for(int i = 1; i < lastDay; i++)
+    for(int i = 1; i <= lastDay; i++)
     {
         printf("%4d", i);
         if((i + startDay) % 7 == 0)
