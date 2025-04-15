@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define MIN_YEAR 2010
 #define MAX_YEAR 2025
 #define START_YEAR 1800
 #define START_DAY 3
+#define TIME_YEAR 1900
 
 typedef enum eMonth 
 { 
@@ -175,21 +177,40 @@ void PrintCalendar(int* yearPtr, int* monthPtr)
             printf("\n");
         }
     }
+}
+
+void PrintDDayCalc(int* ddayPtr)
+{
+    printf("년월 YYYYMMDD 를 입력하세요>"); // 2025
+    if (!scanf("%d", ddayPtr)) 
+    {
+        printf("정수형으로 입력 바람");
+    	return;
+    }
+    while(getchar() != '\n');
+    
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+    int inDate = (TIME_YEAR + tm.tm_year) + (tm.tm_mon + 1) + tm.tm_day;
+    if(inDate < *ddayPtr)
+    {
+        printf("오늘 보다 큰 날짜를 입력 하세요");
+        return;
+    }
+    
     
 }
+
 int main() 
 {
     int *year;
     int *month;
     int *dDay;
-    
-    if(!SearchMonthofCalendar(year, month))
-    {
+    if (!SearchMonthofCalendar(year, month)) {
         printf("\nSearchMonthofCalendar 동작 안함");
         return 0;
-    }
-    else
-    {
+    } else {
         PrintCalendar(year, month);
+        PrintDDayCalc(dDay);
     }
 }
