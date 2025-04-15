@@ -14,17 +14,13 @@
 
 #define STUDENT_MAX_CNT 1000
 
-typedef union StudentEtc {
-  char* hobby;
-  char* etc;
-} StudentEtc;
-
 struct Student {
     char* name;
     int age;
     char gender;
+    char* hobby;
+    char* etc;
     int IsInitChk;
-    StudentEtc studentEtcPtr;
 };
 
 struct Student studentsPtr[STUDENT_MAX_CNT];
@@ -50,7 +46,7 @@ void PrintStudentInfo() {
             break;
         }
         printf("%s / %d / %c / %s / %s\n", studentsPtr[i].name, studentsPtr[i].age, studentsPtr[i].gender, 
-        studentsPtr[i].studentEtcPtr.hobby, studentsPtr[i].studentEtcPtr.etc);
+        studentsPtr[i].hobby, studentsPtr[i].etc);
     }
 }
 
@@ -58,7 +54,6 @@ void InvalidInputStrCheck(struct Student* studentsTemp) {
     char temp[100];
     while (1) 
     {
-        
         printf("학생 이름 ： ");
         if (!scanf("%99s", temp)) 
         {
@@ -75,37 +70,39 @@ void InvalidInputStrCheck(struct Student* studentsTemp) {
     }
 }
 
-void InvalidInputStrCheck1(struct Student* studentsTemp, int isHobby) {
-    char temp[100];
+void InvalidInputStrCheck1(struct Student* studentsTemp) {
+    //char temp[100];
+    union StrScan {
+        char str[1000];
+    };
+    
+    union StrScan temp;
     while (1) 
     {
-        if (isHobby) 
+        printf("학생 취미 ： ");
+        if (!scanf("%99s", temp.str)) 
         {
-            printf("학생 취미 ： ");
-        } 
-        else 
-        {
-            printf("학생 기타 ： ");
+            printf("입력값 잘못됨 취미부터 다시 입력하시오오\n");
+            while (getchar() != '\n');
+            continue;
         }
-
-        if (!scanf("%99s", temp)) 
+        
+        studentsTemp->hobby = (char*)malloc(strlen(temp.str) + 1);
+        strcpy(studentsTemp->hobby, temp.str);
+        
+        printf("학생 기타 ： ");
+        if (!scanf("%99s", temp.str)) 
         {
-            printf("입력값 잘못됨\n");
+            printf("입력값 잘못됨 취미부터 다시 입력하시오오\n");
             while (getchar() != '\n');
             continue;
         }
         while (getchar() != '\n');
-
-        if (isHobby) 
-        {
-            studentsTemp->studentEtcPtr.hobby = (char*)malloc(strlen(temp) + 1);
-            strcpy(studentsTemp->studentEtcPtr.hobby, temp);
-        } 
-        else 
-        {
-            studentsTemp->studentEtcPtr.etc = (char*)malloc(strlen(temp) + 1);
-            strcpy(studentsTemp->studentEtcPtr.etc, temp);
-        }
+        
+        
+        studentsTemp->etc = (char*)malloc(strlen(temp.str) + 1);
+        strcpy(studentsTemp->etc, temp.str);
+        
         break;
     }
 }
@@ -190,8 +187,7 @@ void InsertStudentInfo() {
         InvalidInputStrCheck(studentsTemp);    
         InvalidInputIntCheck(studentsTemp);       
         InvalidInputCharCheck(studentsTemp);      
-        InvalidInputStrCheck1(studentsTemp, 1);   
-        InvalidInputStrCheck1(studentsTemp, 0);
+        InvalidInputStrCheck1(studentsTemp);
 
         studentsTemp->IsInitChk = 1;
 
@@ -209,22 +205,22 @@ void InitStudentInfo() {
     studentsPtr[0].name = "Hong";
     studentsPtr[0].age = 30;
     studentsPtr[0].gender = 'M';
-    studentsPtr[0].studentEtcPtr.hobby = "soccer";
-    studentsPtr[0].studentEtcPtr.etc = "tear Drop";
+    studentsPtr[0].hobby = "soccer";
+    studentsPtr[0].etc = "tear Drop";
     studentsPtr[0].IsInitChk = 1;
 
     studentsPtr[1].name = "Kim";
     studentsPtr[1].age = 25;
     studentsPtr[1].gender = 'F';
-    studentsPtr[1].studentEtcPtr.hobby = "music";
-    studentsPtr[1].studentEtcPtr.etc = "L2TP";
+    studentsPtr[1].hobby = "music";
+    studentsPtr[1].etc = "L2TP";
     studentsPtr[1].IsInitChk = 1;
 
     studentsPtr[2].name = "Park";
     studentsPtr[2].age = 20;
     studentsPtr[2].gender = 'M';
-    studentsPtr[2].studentEtcPtr.hobby = "Lego";
-    studentsPtr[2].studentEtcPtr.etc = "OAuth";
+    studentsPtr[2].hobby = "Lego";
+    studentsPtr[2].etc = "OAuth";
     studentsPtr[2].IsInitChk = 1;
 }
 
@@ -234,8 +230,8 @@ void Cleaning(){
         if (studentsPtr[i].IsInitChk) 
         {
             free(studentsPtr[i].name);
-            free(studentsPtr[i].studentEtcPtr.hobby);
-            free(studentsPtr[i].studentEtcPtr.etc);
+            free(studentsPtr[i].hobby);
+            free(studentsPtr[i].etc);
         }
     }
 }
