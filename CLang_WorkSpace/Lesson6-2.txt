@@ -71,7 +71,6 @@ void InvalidInputStrCheck(struct Student* studentsTemp) {
 }
 
 void InvalidInputStrCheck1(struct Student* studentsTemp) {
-    //char temp[100];
     union StrScan {
         char str[1000];
     };
@@ -80,7 +79,7 @@ void InvalidInputStrCheck1(struct Student* studentsTemp) {
     while (1) 
     {
         printf("학생 취미 ： ");
-        if (!scanf("%99s", temp.str)) 
+        if (!scanf("%s", temp.str)) 
         {
             printf("입력값 잘못됨 취미부터 다시 입력하시오오\n");
             while (getchar() != '\n');
@@ -89,15 +88,10 @@ void InvalidInputStrCheck1(struct Student* studentsTemp) {
         
         studentsTemp->hobby = (char*)malloc(strlen(temp.str) + 1);
         strcpy(studentsTemp->hobby, temp.str);
+        while (getchar() != '\n');
         
         printf("학생 기타 ： ");
-        if (!scanf("%99s", temp.str)) 
-        {
-            printf("입력값 잘못됨 취미부터 다시 입력하시오오\n");
-            while (getchar() != '\n');
-            continue;
-        }
-        while (getchar() != '\n');
+        scanf("%[^\n]", temp.str);
         
         
         studentsTemp->etc = (char*)malloc(strlen(temp.str) + 1);
