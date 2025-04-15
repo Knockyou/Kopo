@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+    union VarietyVal {
+       int intVal;
+       float floatVal;
+       char charVal;
+    };
+    
+    union VarietyVal temp;
+    
+    printf("공용체 정수를 입력하세요 : ");
+    if(!scanf("%d", &temp.intVal))
+    {
+        printf("정수형 값을 입력하세요");
+        return 0;
+    }
+    printf("확인용 %d, %p\n", temp.intVal, &temp.intVal);
+    
+    
+    printf("공용체 실수를 입력하세요 : ");
+    if(!scanf("%f", &temp.floatVal))
+    {
+        printf("정수형 값을 입력하세요");
+        return 0;
+    }
+    printf("확인용 %.2f, %p\n", temp.floatVal, &temp.floatVal);
+    
+    getchar();
+    printf("공용체 문자를 입력하세요 : ");
+    if(!scanf("%c", &temp.charVal))
+    {
+        printf("문자형 값을 입력하세요");
+        return 0;
+    }
+    printf("확인용 %c, %p\n", temp.charVal, &temp.charVal);
+    
+    
+    printf("확인용 %d\n", temp.intVal);
+    printf("확인용 %f\n", temp.floatVal);
+    printf("확인용 %c\n", temp.charVal);
+    
+    return 0;
+}
