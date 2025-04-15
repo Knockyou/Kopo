@@ -18,7 +18,7 @@ struct Student {
     char* name;
     int age;
     char gender;
-    char* hobbie;
+    char* hobby;
     int IsInitChk;
 };
 
@@ -39,7 +39,7 @@ void PrintStudentInfo() {
     for (int i = 0; i < STUDENT_MAX_CNT; i++) {
         if (studentsPtr[i].IsInitChk == 0)
             break;
-        printf("%s / %d / %c / %s\n", studentsPtr[i].name, studentsPtr[i].age, studentsPtr[i].gender, studentsPtr[i].hobbie);
+        printf("%s / %d / %c / %s\n", studentsPtr[i].name, studentsPtr[i].age, studentsPtr[i].gender, studentsPtr[i].hobby);
     }
 }
 
@@ -61,10 +61,10 @@ void InvalidInputStrCheck(struct Student* studentsTemp, int isName) {
 
         if (isName) {
             studentsTemp->name = (char*)malloc(strlen(temp) + 1);
-            studentsTemp->name = temp;
+            strcpy(studentsTemp->name, temp);
         } else {
-            studentsTemp->hobbie = (char*)malloc(strlen(temp) + 1);
-            studentsTemp->hobbie = temp;
+            studentsTemp->hobby = (char*)malloc(strlen(temp) + 1);
+            strcpy(studentsTemp->hobby, temp);
         }
         break;
     }
@@ -144,39 +144,46 @@ void InsertStudentInfo() {
 
         InvalidInputCharCheck_YesNo(&flag);
         if (flag == INSERT_DONE || flag == INSERT_DONE1)
+        {
             break;
+        }
     }
 }
 
 void InitStudentInfo() {
-    studentsPtr[0].name = strdup("Hong");
+    studentsPtr[0].name = "Hong";
     studentsPtr[0].age = 30;
     studentsPtr[0].gender = 'M';
-    studentsPtr[0].hobbie = strdup("soccer");
+    studentsPtr[0].hobby = "soccer";
     studentsPtr[0].IsInitChk = 1;
 
-    studentsPtr[1].name = strdup("Kim");
+    studentsPtr[1].name = "Kim";
     studentsPtr[1].age = 25;
     studentsPtr[1].gender = 'F';
-    studentsPtr[1].hobbie = strdup("music");
+    studentsPtr[1].hobby = "music";
     studentsPtr[1].IsInitChk = 1;
 
-    studentsPtr[2].name = strdup("Park");
+    studentsPtr[2].name = "Park";
     studentsPtr[2].age = 20;
     studentsPtr[2].gender = 'M';
-    studentsPtr[2].hobbie = strdup("Reading");
+    studentsPtr[2].hobby = "Reading";
     studentsPtr[2].IsInitChk = 1;
+}
+
+void Cleaning(){
+     for (int i = 0; i < STUDENT_MAX_CNT; i++) {
+        if (studentsPtr[i].IsInitChk) {
+            free(studentsPtr[i].name);
+            free(studentsPtr[i].hobby);
+        }
+    }
 }
 
 int main() {
     InitStudentInfo();
     InsertStudentInfo();
+    
+    Cleaning();
 
-    for (int i = 0; i < STUDENT_MAX_CNT; i++) {
-        if (studentsPtr[i].IsInitChk) {
-            free(studentsPtr[i].name);
-            free(studentsPtr[i].hobbie);
-        }
-    }
     return 0;
 }
