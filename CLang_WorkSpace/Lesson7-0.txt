@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MIN_YEAR 2022
+#define MAX_YEAR 2025
+
+typedef enum eMonth 
+{ 
+    Jan = 1, 
+    Feb, 
+    Mar, 
+    Apr, 
+    May, 
+    Jun, 
+    Jul, 
+    Ang, 
+    Sep, 
+    Oct, 
+    Nov, 
+    Dec
+} MONTH;
+
+typedef enum eDay 
+{
+    Sun = 0, 
+    Mon, 
+    Tue, 
+    Wed, 
+    Thu,
+    Fri, 
+    Sat
+} DAY;
+
+const int OrdinaryYearDay[Dec] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 평년
+const int     LeapYearDay[Dec] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; // 윤년
+
+// 4년 마다 1번씩 2월이 2일이 됨 그게 윤년
+
+
+void PrintCalendar(int* yearPtr, int* monthPtr)
+{
+    if(isLeapYear(yearPtr) > 1)
+    {
+        //1800년 1월 1일은 수요일
+        for(int i = Jan; i <= Dec; i++)
+        {
+            for(int j = Sun; j < Sat; j++)
+            {
+                
+            }
+        }
+    }
+    else
+    {
+        
+    }
+}
+
+int isLeapYear(int* yearPtr) {return (((*yearPtr % 4 == 0) && (*yearPtr % 100 != 0)) || (*yearPtr % 400 == 0));}
+
+int SearchMonthofCalendar(int* yearPtr, int* monthPtr)
+{
+    printf("year를 입력하세요>"); // 2025
+    if (!scanf("%d", yearPtr)) 
+    {
+        printf("정수형으로 입력 바람");
+    	return 0;
+    }
+    while(getchar() != '\n');
+    if(*yearPtr < MIN_YEAR || *yearPtr > MAX_YEAR)
+    {
+        printf("2020 ~ 2025 년도를 입력 해주세요");
+        return 0;
+    }
+    
+    
+    printf("month를 입력하세요>"); // 1
+    if (!scanf("%d", monthPtr)) 
+    {
+        printf("정수형으로 입력 바람");
+    	return 0;
+    }
+    while(getchar() != '\n');
+    
+    if(*monthPtr < Jan || *monthPtr > Dec)
+    {
+        printf("1 ~ 12달을 입력 해주세요");
+        return 0;
+    }
+    
+    return 1;
+}
+
+int main() 
+{
+    int *year;
+    int *month;
+    
+    if(!SearchMonthofCalendar(year, month))
+    {
+        printf("\nSearchMonthofCalendar 동작 안함");
+        return 0;
+    }
+    else
+    {
+        PrintCalendar(year, month);
+    }
+}
