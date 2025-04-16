@@ -23,10 +23,10 @@ int main() {
             printf("%s", "TRUCK");
             break;
         case VAN:
-        printf("%s", "VAN");
+            printf("%s", "VAN");
             break;
         default:
-        printf("%s", "없는 차량 정보");
+            printf("%s", "없는 차량 정보");
         break;
     }
     printf(" 입니다\n");
