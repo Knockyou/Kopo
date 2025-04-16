@@ -181,7 +181,7 @@ void PrintCalendar(int* yearPtr, int* monthPtr)
 
 void PrintDDayCalc()
 {
-    int dday_year = 0, dday_month = 0, dday = 0;
+    int temp_dday = 0, dday_year = 0, dday_month = 0, dday = 0;
     
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
@@ -190,45 +190,37 @@ void PrintDDayCalc()
     int month = tm.tm_mon + 1;
     int day   = tm.tm_mday;
     
-    printf("년도 4자리를 입력하세요>");
-    if (!scanf("%d", &dday_year)) 
+    printf("\n\n년도 8자리를 입력하세요>");
+    if (!scanf("%d", &temp_dday)) 
     {
         printf("정수형으로 입력 바람");
     	return;
     }
+    while(getchar() != '\n');
+    
+    dday_year = temp_dday / 10000;
+    dday_month = (temp_dday / 100) % 100;
+    dday = temp_dday % 100;
+    
     if(dday_year < year)
     {
-        printf("년도를 확인 바랍니다(올해 이상의 년도만 입력 가능능)");
+        printf("년도를 확인 바랍니다(올해 이상의 년도만 입력 가능)");
     	return;
     }
-    while(getchar() != '\n');
     
-    printf("월을 입력하세요>");
-    if (!scanf("%d", &dday_month)) 
-    {
-        printf("정수형으로 입력 바람");
-    	return;
-    }
     if(dday_month < Jan || dday_month > Dec )
     {
-        printf("1 ~ 12의 값을 입력 바랍니다");
-    	return;
-    }
-    while(getchar() != '\n');
-    
-    printf("날짜 를 입력하세요>");
-    if (!scanf("%d", &dday)) 
-    {
-        printf("정수형으로 입력 바람");
-    	return;
-    }
-    if((dday < 28 || dday > 31))
-    {
-        printf("28 ~ 31의 값을 입력해야 합니다");
+        printf("달은 1 ~ 12의 값을 입력 바랍니다");
     	return;
     }
     
     int lastDay = isLeapYear(dday_year) ? LeapYearDay[dday_month + 1] : OrdinaryYearDay[dday_month + 1];
+    
+    if((dday < 1 || dday > 31))
+    {
+        printf("28 ~ 31의 값을 입력해야 합니다");
+    	return;
+    }
     
     if(dday >= lastDay)
     {
@@ -260,7 +252,7 @@ void PrintDDayCalc()
     // 해당 달 날짜 빼주기기
     totalTmp += dday;
     
-    printf("\nDDay : %d", totalTmp); // 오늘 날짜 빼줘야하므로 -1
+    printf("\nDDay : %d", totalTmp - 1); // 오늘 날짜 빼줘야하므로 -1
 }
 
 int main() 
