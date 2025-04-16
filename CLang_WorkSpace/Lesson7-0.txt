@@ -255,17 +255,13 @@ void PrintDDayCalc()
     printf("\nDDay : %d", totalTmp - 1); // 오늘 날짜 빼줘야하므로 -1
 }
 
-int main() 
-{
+void main() {
     int *year;
-    int *month;
-    
+    int *month;  
     if (!SearchMonthofCalendar(year, month)) {
         printf("\nSearchMonthofCalendar 동작 안함");
-        return 0;
     } else {
         PrintCalendar(year, month);
         PrintDDayCalc();
     }
-    return 0;
 }
