@@ -202,9 +202,9 @@ void PrintDDayCalc()
     dday_month = (temp_dday / 100) % 100;
     dday = temp_dday % 100;
     
-    if(dday_year < year)
+    if(dday_year < year || dday_month < month)
     {
-        printf("년도를 확인 바랍니다(올해 이상의 년도만 입력 가능)");
+        printf("년도를 확인 바랍니다(오늘보다 큰 날짜를 입려해주세요)");
     	return;
     }
     
