@@ -252,7 +252,7 @@ void PrintDDayCalc()
     // 해당 달 날짜 빼주기기
     totalTmp += dday;
     
-    printf("\nDDay : %d", totalTmp - 1); // 오늘 날짜 빼줘야하므로 -1
+    printf("\nDDay : %d", totalTmp); // 오늘 날짜 빼줘야하므로 -1
 }
 
 void main() {
