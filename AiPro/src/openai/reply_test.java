@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class reply_test {
-
+	// post 방식으로 요청
 	public static String apiPost(String sendData) throws Exception
 	{
 		URL url = null;
@@ -28,26 +28,25 @@ public class reply_test {
 		BufferedWriter bufferedWriter = null;
 		HttpURLConnection urlConnection = null;
 		
-		// 다음은 모델 상화에 따라 더주거나 해라..
-		int connTimeout = 30000; //접속기다리기 30초
-		int readTimeout = 30000; //json받기 시작해서 다 받기 30초
+		int connTimeout = 30000; //접속기다리기 30초 제한
+		int readTimeout = 30000; //json받기 시작해서 다 받기 30초 제한
 		
-		//String apiUrl = "https://api.openai.com/v1/chat/completions";
-		String apiUrl = "http://localhost:1234/v1/chat/completions";
-		String API_KEY = "Bearer "+ System.getenv("OPENAI_API_KEY");
-			
-		
+		//String apiUrl = "https://api.openai.com/v1/chat/completions"; // openapi 사용 url
+		//String API_KEY = "Bearer "+ System.getenv("OPENAI_API_KEY"); // openapi 방식일때 key값 필요 
+		String apiUrl = "http://localhost:1234/v1/chat/completions"; // 로컬에 돌아가는 lm-studio 방식
+				
 		String retStr = "";
 		try {
 			url = new URL(apiUrl);
 			
-			urlConnection = (HttpURLConnection)url.openConnection();
-			urlConnection.setRequestMethod("POST");
-			urlConnection.setConnectTimeout(connTimeout);
-			urlConnection.setReadTimeout(readTimeout);
+			urlConnection = (HttpURLConnection)url.openConnection(); // 커넥션 열어줌
+			urlConnection.setRequestMethod("POST"); // post 메소드 방식
+			urlConnection.setConnectTimeout(connTimeout); // 커넥션 타임아웃 30초로 지정 해둠
+			urlConnection.setReadTimeout(readTimeout); // 커넥션 타임아웃 30초로 지정 해둠
 			
 			//두개의 헤더 보내기..
-			urlConnection.setRequestProperty("Authorization", API_KEY);
+			//urlConnection.setRequestProperty("Authorization", API_KEY); // openapi 방식
+			// 헤더셋팅
 			urlConnection.setRequestProperty("Content-Type", "application/json");
 			urlConnection.setDoOutput(true);
 			urlConnection.setInstanceFollowRedirects(true);
@@ -60,7 +59,8 @@ public class reply_test {
 			bufferedWriter.flush();
 			
 			buffer = new StringBuilder();
-			
+
+			// 커넥션이 연결될으면 실행
 			if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
 			{
 				bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"UTF-8"));
@@ -68,9 +68,9 @@ public class reply_test {
 					buffer.append(readLine).append("\n");
 				
 				//System.out.println("= 응답이 왔습니다. =========");
-				// 어떤 형식의 json데이터 인지 봐라.. 아래가 받아진 json
-				
-				
+				// 어떤 형식의 json데이터 확인 필요
+
+				// json 형식의 데이터이기 때문에 키값을 확인하여 필요한 리턴값 가져옴옴
 				JSONParser parser = new JSONParser();
 				JSONObject jsonObject = (JSONObject)parser.parse(buffer.toString());
 				
@@ -81,11 +81,11 @@ public class reply_test {
 											
 				
 				String content = msgObject.get("content").toString();
-				if(content.contains("1"))
+				if(content.contains("1")) // 답변이 1이면 긍정적 판단
 					content = "1";
-				else if(content.contains("2"))
+				else if(content.contains("2")) // 답변이 2이면 부정적 판단
 					content = "2";
-				else
+				else // 그 이외의 판단
 					content = "3";
 				
 				retStr = content;				
@@ -124,6 +124,7 @@ public class reply_test {
 	}
 	public static String reqData(String msg) 
 	{
+		// ai에게 물어볼 데이터 셋팅팅
 		String send_data = """
 				{
 					"model" : "llama-3.2-1b-instruct",
